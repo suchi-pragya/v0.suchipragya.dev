@@ -23,6 +23,7 @@ module.exports = {
           base: withOpacity("--color-text-base"),
           accent: withOpacity("--color-accent"),
           inverted: withOpacity("--color-fill"),
+          muted: withOpacity("--color-card"),
         },
       },
       backgroundColor: {
@@ -69,6 +70,9 @@ module.exports = {
           },
         },
       },
+      height:{
+        'custom-100vh': 'calc(100vh - 208px)',
+      }
     },
   },
   plugins: [require("@tailwindcss/typography")],

@@ -6,7 +6,7 @@ export const SITE: Site = {
   desc: "",
   title: "Suchi Pragya",
   ogImage: "suchi_banner_linkedin.png",
-  lightAndDarkMode: true,
+  lightAndDarkMode: false,
   postPerPage: 3,
   scheduledPostMargin: 15 * 60 * 1000, // 15 minutes
 };
