@@ -1,37 +1,30 @@
-name: Build and Deploy Astro with Tailwind CSS
+name: Deploy to GitHub Pages
 
 on:
   push:
-    branches:
-      - main  # Change this to your main branch name
-  pull_request:
-    branches:
-      - main  # Change this to your main branch name
+    branches: [ main ]
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
 
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+      - name: Checkout your repository using git
+        uses: actions/checkout@v4
+      - name: Install, build, and upload your site
+        uses: withastro/action@v2
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v2
-
-      - name: Install dependencies
-        run: npm install
-
-      - name: Build Astro site
-        run: npm run build
-
-      - name: Install Tailwind CSS
-        run: npm install tailwindcss@^3 postcss@^8 autoprefixer@^10
-
-      - name: Build Tailwind CSS
-        run: npx tailwindcss build ./src/styles/main.css -o ./public/styles/main.css
-
-      - name: Bundle with Jampack
-        run: npm run build && jampack ./dist
-
-      # Add deployment steps based on your hosting platform (e.g., Netlify, Vercel, etc.)
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
